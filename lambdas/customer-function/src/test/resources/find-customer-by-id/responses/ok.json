@@ -1,0 +1,4 @@
+{
+    "body": "{\"id\":1,\"name\":\"Demo\",\"email\":\"demo@domain.com\"}",
+    "statusCode": 200
+  }
