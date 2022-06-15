@@ -36,8 +36,8 @@ public class CustomerDAO {
             customer = new Customer(customerId, results.getString("name"), results.getString("email"));
         }
     
-        TracingUtils.putAnnotation("customerId", Integer.toString(customer.getId()));
-        log.info("Customer with id " + customerId + " was " + (customer != null ? "not found" : "found"));
+        TracingUtils.putAnnotation("customerId", Integer.toString(customerId));
+        log.info("Customer with id " + customerId + " was " + (customer != null ? "found" : "not found"));
 
         return customer;
     }
@@ -50,6 +50,7 @@ public class CustomerDAO {
                 Statement.RETURN_GENERATED_KEYS);
         preparedStatement.setString(1, customer.getName());
         preparedStatement.setString(2, customer.getEmail());
+        preparedStatement.execute();
 
         ResultSet rs = preparedStatement.getGeneratedKeys();
         if (rs.next()) {

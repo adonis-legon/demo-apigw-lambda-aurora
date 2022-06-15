@@ -26,17 +26,17 @@ import static org.mockito.Mockito.lenient;
 import org.json.JSONException;
 
 @ExtendWith(MockitoExtension.class)
-public class CustomerFunctionTest {
+public class CustomerFunctionUnitTest {
 
     @Mock
     private Context context;
 
-    // @Mock
+    @Mock
     private CustomerService customerService;
 
     private ObjectMapper mapper;
 
-    public CustomerFunctionTest() {
+    public CustomerFunctionUnitTest() {
         customerService = new CustomerService();
         mapper = new ObjectMapper();
     }
@@ -60,7 +60,7 @@ public class CustomerFunctionTest {
     public void testFindCustomerById(APIGatewayProxyRequestEvent event, APIGatewayProxyResponseEvent response) 
     throws JsonProcessingException, JSONException, FindCustomerException {
         int customerId = 1;
-        Customer customer = new Customer(customerId, "Demo", "demo@domain.com");
+        Customer customer = new Customer(customerId, "Demo User", "demo@domain.com");
 
         lenient().when(customerService.findById(customerId)).thenReturn(customer);
 
