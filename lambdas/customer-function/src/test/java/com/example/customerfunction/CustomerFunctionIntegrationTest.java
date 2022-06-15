@@ -12,7 +12,6 @@ import com.example.customerfunction.business.CustomerService;
 import com.example.customerfunction.exceptions.FindCustomerException;
 import com.example.customerfunction.functions.CustomerFunction;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.amazonaws.services.lambda.runtime.tests.annotations.Events;
 import com.amazonaws.services.lambda.runtime.tests.annotations.Responses;
 
