@@ -27,3 +27,30 @@ services:
       - DB_REGION=${AWS_REGION}
     depends_on:
       - customer-db
+  order-db:
+    image: postgres:12
+    container_name: demo-aws-lambda-order-db
+    restart: always
+    ports:
+    - "${LOCAL_ORDER_DB_PORT}:5432"
+    environment:
+      - POSTGRES_USER=${ORDER_DB_USER}
+      - POSTGRES_PASSWORD=${ORDER_DB_PASS}
+      - POSTGRES_DB=${ORDER_DB_NAME}
+    volumes: 
+        - ../lambdas/order-function/resources/sql/order.sql:/docker-entrypoint-initdb.d/order.sql
+  order-function:
+    image: demo-aws-lambda-order-function:${ORDER_FUNCTION_IMAGE_VERSION}
+    container_name: demo-aws-lambda-order-function
+    ports:
+      - "${LOCAL_ORDER_FUNCTION_PORT}:8080"
+    environment:
+      - DB_ENDPOINT=demo-aws-lambda-customer-db
+      - DB_PORT=5432
+      - DB_USER=${ORDER_DB_USER}
+      - DB_PASS=${ORDER_DB_PASS}
+      - DB_NAME=${ORDER_DB_NAME}
+      - DB_AUTH_IAM=${ORDER_DB_AUTH_IAM}
+      - DB_REGION=${AWS_REGION}
+    depends_on:
+      - order-db

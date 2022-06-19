@@ -1,8 +1,8 @@
-# Lambda Function for performing Customer CRUD Operations in Java
+# Lambda Function for performing Customer CRUD Operations in Python
 
 1. Technology Stack:
-1.1. Java 11
-1.2. Basic JDBC with Postgresql Driver
+1.1. Python 3.8
+1.2. Postgresql connector
 2. Observability:
 2.1. Logging with AWS Cloudwatch Logs
 2.2. Metrics with AWS Cloudwatch Metrics
@@ -20,7 +20,22 @@ DB_NAME:        Database name
 DB_AUTH_IAM:    If the function will use IAM based authentication to access de Database or not (values: true or false)
 DB_REGION:      AWS Region where the RDS service belongs to
 
-## Reference implementation
+## Setup Local Environment (for python running/debugging)
 
-- https://medium.com/i-love-my-local-farmer-engineering-blog/how-to-use-java-in-your-db-connected-aws-lambdas-211c1f9c53aa
-- https://medium.com/i-love-my-local-farmer-engineering-blog/connecting-your-java-aws-lambda-to-an-rds-database-and-rds-proxy-4512a3ba1c3d
+### On Windows
+
+```console
+$ # create virtual environment
+$ python -m venv .venv
+$ # activate virtual environment
+$ source .venv/Scripts/activate
+$ # upgrade pip
+$ python -m pip install --upgrade pip
+$ # install dependencies
+$ pip install -r requirements.txt
+
+**Important:** after adding/updating/removing dependencies to the local virtual environment, run this command to update dependencies file
+
+```console
+$ pip freeze > requirements.txt
+```
