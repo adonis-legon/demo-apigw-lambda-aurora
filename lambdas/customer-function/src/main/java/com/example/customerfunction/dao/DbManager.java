@@ -1,5 +1,13 @@
 package com.example.customerfunction.dao;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.GeneralSecurityException;
+import java.security.KeyStore;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -25,6 +33,13 @@ public class DbManager {
     private static final String DB_AUTH_IAM = System.getenv("DB_AUTH_IAM");
     private static final long BACKOFF_TIME_MILLI = 1000;
 
+    public static final String SSL_CERTIFICATE = "rds-ca-root.pem";
+    private static final String KEY_STORE_TYPE = "JKS";
+    private static final String KEY_STORE_PROVIDER = "SUN";
+    private static final String KEY_STORE_FILE_PREFIX = "sys-connect-via-ssl-test-cacerts";
+    private static final String KEY_STORE_FILE_SUFFIX = ".jks";
+    private static final String DEFAULT_KEY_STORE_PASSWORD = "delivery";
+
     @Getter
     private Connection dbConnection;
 
@@ -43,6 +58,11 @@ public class DbManager {
                     getUserPassword(DB_USER, DB_ENDPOINT, DB_REGION, DB_PORT, iamAuth));
 
             String dbUrl = String.format("%s%s:%d/%s", JDBC_PREFIX, DB_ENDPOINT, DB_PORT, DB_NAME);
+
+            if(iamAuth){
+                dbConnectionProperties.setProperty("useSSL", "true");
+                setSslProperties();
+            }
 
             this.dbConnection = DriverManager.getConnection(dbUrl, dbConnectionProperties);
             log.info("Connection Established");
@@ -75,6 +95,35 @@ public class DbManager {
         }
 
         return this.dbConnection;
+    }
+
+    private static void setSslProperties() throws GeneralSecurityException, IOException {
+        File keyStoreFile = createKeyStoreFile(createCertificate(SSL_CERTIFICATE));
+        System.setProperty("javax.net.ssl.trustStore", keyStoreFile.getPath());
+        System.setProperty("javax.net.ssl.trustStoreType", KEY_STORE_TYPE);
+        System.setProperty("javax.net.ssl.trustStorePassword", DEFAULT_KEY_STORE_PASSWORD);
+    }
+
+    public static X509Certificate createCertificate(String certFile) throws GeneralSecurityException, IOException {
+        CertificateFactory certFactory = CertificateFactory.getInstance("X.509");
+
+        try (InputStream certInputStream = DbManager.class.getResourceAsStream("/" + certFile)) {
+            return (X509Certificate) certFactory.generateCertificate(certInputStream);
+        }
+    }
+
+    private static File createKeyStoreFile(X509Certificate rootX509Certificate)
+            throws GeneralSecurityException, IOException {
+        File keyStoreFile = File.createTempFile(KEY_STORE_FILE_PREFIX, KEY_STORE_FILE_SUFFIX);
+
+        try (FileOutputStream fos = new FileOutputStream(keyStoreFile.getPath())) {
+            KeyStore ks = KeyStore.getInstance(KEY_STORE_TYPE, KEY_STORE_PROVIDER);
+            ks.load(null);
+            ks.setCertificateEntry("rootCaCertificate", rootX509Certificate);
+            ks.store(fos, DEFAULT_KEY_STORE_PASSWORD.toCharArray());
+        }
+
+        return keyStoreFile;
     }
 
     private String getUserPassword(String username, String dbEndpoint, String region, Integer port, boolean iamAuth) {

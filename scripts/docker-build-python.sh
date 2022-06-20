@@ -5,7 +5,6 @@ PUSH_IMAGE=${4:-false}
 AWS_ENVIRONMENT=${5}
 
 CURRENT_PATH=$(pwd)
-set -e
 
 # run unit and integration tests
 cd ../lambdas/$APP_PATH
