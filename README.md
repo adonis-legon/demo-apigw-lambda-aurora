@@ -32,3 +32,28 @@ scripts$ curl -XPOST "http://localhost:[function-port]/2015-03-31/functions/func
 scripts$ # example
 scripts$ curl -XPOST "http://localhost:9001/2015-03-31/functions/function/invocations" -d "@../lambdas/customer-function/src/test/resources/create-customer/events/ok.json"
 ```
+
+## Setup Terraform
+
+```console
+terraform$ terraform workspace new <env>
+terraform$ terraform init
+```
+
+## Review Infrastructure changes
+
+```console
+scripts$ . terraform-plan.sh <env>
+```
+
+## Apply Infrastructure changes
+
+```console
+scripts$ . terraform-apply.sh <env>
+```
+
+## Destroy Infrastructure
+
+```console
+scripts$ . terraform-destroy.sh <env>
+```
