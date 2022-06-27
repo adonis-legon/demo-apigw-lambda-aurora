@@ -10,5 +10,7 @@ min_aurora_capacity_units = 1
 max_aurora_capacity_units = 1
 db_instances = {}
 db_master_password = "db_master_password"
+db_app_username = "db_app_username"
+db_proxy_security_group = "db_proxy_security_group"
 lambda_subnets = [ "lambda_subnet1", "lambda_subnet2" ]
 tags = "common_tags"

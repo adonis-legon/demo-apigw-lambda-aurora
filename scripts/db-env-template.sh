@@ -1,0 +1,7 @@
+export DB_ENDPOINT=
+export DB_PORT=
+export DB_MASTER_USERNAME=
+export DB_MASTER_PASSWORD=
+export DB_NAME=
+export DB_USERNAME=
+export DB_PASSWORD=
