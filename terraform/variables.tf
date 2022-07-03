@@ -70,9 +70,54 @@ variable "db_proxy_security_group" {
     description = "Security Group where the Database Proxy belongs to"
 }
 
+variable "customer_function_name" {
+    type = string
+    description = "Name of the Customer Lambda Function"
+}
+
+variable "customer_function_version" {
+    type = string
+    description = "Version of the Customer Lambda Function"
+}
+
+variable "customer_function_dbname" {
+    type = string
+    description = "Database Name of the Customer Lambda Function"
+}
+
+variable "customer_function_timeout" {
+    type = string
+    description = "Timeout of the Customer Lambda Function"
+}
+
+variable "order_function_name" {
+    type = string
+    description = "Name of the Order Lambda Function"
+}
+
+variable "order_function_version" {
+    type = string
+    description = "Version of the Order Lambda Function"
+}
+
+variable "order_function_dbname" {
+    type = string
+    description = "Database Name of the Order Lambda Function"
+}
+
+variable "order_function_timeout" {
+    type = string
+    description = "Timeout of the Order Lambda Function"
+}
+
 variable "lambda_subnets" {
     type = list(string)
     description = "AWS VPC subnets where the Lambdas can have their ENI (Elastic Network Interface) to connect to the VPC"
+}
+
+variable "lambda_security_group" {
+    type = string
+    description = "Security Group for the Lambdas to be able to access the RDS Proxy"
 }
 
 variable "tags" {

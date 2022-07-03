@@ -19,7 +19,6 @@ import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.rds.RdsUtilities;
 import software.amazon.awssdk.services.rds.model.GenerateAuthenticationTokenRequest;
-import software.amazon.lambda.powertools.tracing.Tracing;
 
 @Slf4j
 public class DbManager {
@@ -47,7 +46,6 @@ public class DbManager {
         DB_PORT = retrievePort("DB_PORT", 5432);
     }
 
-    @Tracing(segmentName = "CreateDBConnection")
     public Connection createConnection() {
         try {
             boolean iamAuth = DB_AUTH_IAM != null && !DB_AUTH_IAM.isEmpty() && DB_AUTH_IAM.equalsIgnoreCase("true");
@@ -55,16 +53,16 @@ public class DbManager {
             Properties dbConnectionProperties = new Properties();
             dbConnectionProperties.setProperty("user", DB_USER);
             dbConnectionProperties.setProperty("password",
-                    getUserPassword(DB_USER, DB_ENDPOINT, DB_REGION, DB_PORT, iamAuth));
+                    iamAuth ? generateAuthToken(DB_USER, DB_ENDPOINT, DB_REGION, DB_PORT) : DB_PASS);
 
-            String dbUrl = String.format("%s%s:%d/%s", JDBC_PREFIX, DB_ENDPOINT, DB_PORT, DB_NAME);
-
-            if(iamAuth){
+            if (iamAuth) {
                 dbConnectionProperties.setProperty("useSSL", "true");
                 setSslProperties();
             }
 
+            String dbUrl = String.format("%s%s:%d/%s", JDBC_PREFIX, DB_ENDPOINT, DB_PORT, DB_NAME);
             this.dbConnection = DriverManager.getConnection(dbUrl, dbConnectionProperties);
+
             log.info("Connection Established");
         } catch (Exception e) {
             log.error("Connection FAILED. Message: " + e.getMessage(), e);
@@ -74,7 +72,6 @@ public class DbManager {
         return this.dbConnection;
     }
 
-    @Tracing(segmentName = "RefreshDBConnection")
     protected Connection refreshDbConnection() {
         try {
             if (this.dbConnection == null || !this.dbConnection.isValid(1)) {
@@ -124,10 +121,6 @@ public class DbManager {
         }
 
         return keyStoreFile;
-    }
-
-    private String getUserPassword(String username, String dbEndpoint, String region, Integer port, boolean iamAuth) {
-        return iamAuth ? generateAuthToken(username, dbEndpoint, region, port) : DB_PASS;
     }
 
     private String generateAuthToken(String username, String dbEndpoint, String region, Integer port) {

@@ -7,10 +7,6 @@ import java.sql.Statement;
 
 import com.example.customerfunction.model.Customer;
 
-import lombok.extern.slf4j.Slf4j;
-import software.amazon.lambda.powertools.tracing.TracingUtils;
-
-@Slf4j
 public class CustomerDAO {
 
     private DbManager dbManager;
@@ -21,25 +17,6 @@ public class CustomerDAO {
 
     public CustomerDAO(DbManager dbManager) {
         this.dbManager = dbManager;
-    }
-
-    public Customer findById(int customerId) throws SQLException {
-        this.dbManager.refreshDbConnection();
-
-        String selectQuery = "select * from customer where id = ?";
-        PreparedStatement preparedStatement = this.dbManager.getDbConnection().prepareStatement(selectQuery);
-        preparedStatement.setInt(1, customerId);
-
-        Customer customer = null;
-        ResultSet results = preparedStatement.executeQuery();
-        if (results.next()) {
-            customer = new Customer(customerId, results.getString("name"), results.getString("email"));
-        }
-    
-        TracingUtils.putAnnotation("customerId", Integer.toString(customerId));
-        log.info("Customer with id " + customerId + " was " + (customer != null ? "found" : "not found"));
-
-        return customer;
     }
 
     public void save(Customer customer) throws SQLException {
@@ -57,9 +34,22 @@ public class CustomerDAO {
             customer.setId(rs.getInt(1));
         }
 
-        TracingUtils.putAnnotation("customerId", Integer.toString(customer.getId()));
-        log.info("Customer created con id: 1");
-
         preparedStatement.close();
+    }
+
+    public Customer findById(int customerId) throws SQLException {
+        this.dbManager.refreshDbConnection();
+
+        String selectQuery = "select * from customer where id = ?";
+        PreparedStatement preparedStatement = this.dbManager.getDbConnection().prepareStatement(selectQuery);
+        preparedStatement.setInt(1, customerId);
+
+        Customer customer = null;
+        ResultSet results = preparedStatement.executeQuery();
+        if (results.next()) {
+            customer = new Customer(customerId, results.getString("name"), results.getString("email"));
+        }
+    
+        return customer;
     }
 }

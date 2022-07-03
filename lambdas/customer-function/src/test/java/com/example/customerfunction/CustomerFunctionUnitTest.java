@@ -1,5 +1,6 @@
 package com.example.customerfunction;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.mockito.Mock;
@@ -11,6 +12,7 @@ import com.amazonaws.services.lambda.runtime.tests.annotations.HandlerParams;
 import com.amazonaws.lambda.thirdparty.com.fasterxml.jackson.core.JsonProcessingException;
 import com.amazonaws.lambda.thirdparty.com.fasterxml.jackson.databind.ObjectMapper;
 import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.amazonaws.services.lambda.runtime.tests.annotations.Events;
@@ -22,6 +24,7 @@ import com.example.customerfunction.model.Customer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.when;
 
 import org.json.JSONException;
 
@@ -32,6 +35,9 @@ public class CustomerFunctionUnitTest {
     private Context context;
 
     @Mock
+    private LambdaLogger loggerMock;
+
+    @Mock
     private CustomerService customerService;
 
     private ObjectMapper mapper;
@@ -39,6 +45,11 @@ public class CustomerFunctionUnitTest {
     public CustomerFunctionUnitTest() {
         customerService = new CustomerService();
         mapper = new ObjectMapper();
+    }
+
+    @BeforeEach
+    public void setUp() throws Exception {
+        when(context.getLogger()).thenReturn(loggerMock);
     }
 
     @ParameterizedTest

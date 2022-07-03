@@ -22,16 +22,26 @@ class DbManager:
         if not self.is_connected():
             try:
                 db_password = self.__DB_PASS
-                ssl_config = None
+                ssl_mode = 'disable'
+                ssl_root_cert = ''
 
                 if self.__DB_AUTH_IAM and self.__DB_AUTH_IAM.lower() == 'true':
-                    db_password = boto3.client('rds').generate_db_auth_token(self.__DB_ENDPOINT, self.__DB_PORT, self.__DB_USER)
-                    ssl_config = {'ca': os.path.join(os.path.dirname(__file__), 'certs', 'rds-ca-root.pem')}
+                    db_password = boto3.client('rds').generate_db_auth_token(
+                        DBHostname=self.__DB_ENDPOINT, Port=self.__DB_PORT, DBUsername=self.__DB_USER, Region=self.__DB_REGION)
 
-                self.db_conn = psycopg2.connect(host=self.__DB_ENDPOINT, port=self.__DB_PORT, database=self.__DB_NAME, 
-                                                user=self.__DB_USER, password=db_password, ssl=ssl_config)
+                    ssl_mode = 'require'
+                    # TODO: I'm not able to validate RDS's CA-Certificate, so by now just do SSL without Certificate validation
+                    # check more in this links:
+                    # - https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/ssl-certificate-rotation-aurora-postgresql.html
+                    # - https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/PostgreSQL.Concepts.General.SSL.html#PostgreSQL.Concepts.General.SSL.Connecting
+                    # - https://www.postgresql.org/docs/current/libpq-connect.html
+                    # ssl_root_cert = os.path.join(os.path.dirname(__file__), 'certs', 'rds-ca-root.pem')
+
+                self.db_conn = psycopg2.connect(host=self.__DB_ENDPOINT, port=self.__DB_PORT, database=self.__DB_NAME,
+                                                user=self.__DB_USER, password=db_password, sslmode=ssl_mode, sslrootcert=ssl_root_cert)
             except Exception as e:
-                raise DbException(f"Error connecting to Postgres Database: {self.__DB_ENDPOINT}. Message: {e.__str__()}")
+                raise DbException(
+                    f"Error connecting to Postgres Database: {self.__DB_ENDPOINT}. Message: {e.__str__()}")
 
         return self.db_conn
 
@@ -57,6 +67,7 @@ class DbManager:
         db_cursor.close()
 
         return result
+
 
 class DbException(Exception):
     pass

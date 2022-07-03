@@ -2,7 +2,11 @@ import json
 
 from src.app.order_service import create_order, find_order_by_id
 from src.app.order_exceptions import *
+from src.app.trace_manager import TraceManager
 
+tracer = TraceManager.get_tracer()
+
+@tracer.capture_lambda_handler
 def handle_event(event, context):
     response = None
 

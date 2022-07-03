@@ -25,6 +25,7 @@ services:
       - DB_NAME=${CUSTOMER_DB_NAME}
       - DB_AUTH_IAM=${CUSTOMER_DB_AUTH_IAM}
       - DB_REGION=${AWS_REGION}
+      - POWERTOOLS_SERVICE_NAME=demo-aws-lambda-customer-function
     depends_on:
       - customer-db
   order-db:
@@ -52,5 +53,6 @@ services:
       - DB_NAME=${ORDER_DB_NAME}
       - DB_AUTH_IAM=${ORDER_DB_AUTH_IAM}
       - DB_REGION=${AWS_REGION}
+      - POWERTOOLS_SERVICE_NAME=demo-aws-lambda-order-function
     depends_on:
       - order-db
