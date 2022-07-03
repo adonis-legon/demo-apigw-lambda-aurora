@@ -2,9 +2,6 @@ package com.example.customerfunction.business;
 
 import java.sql.SQLException;
 
-import com.amazonaws.xray.AWSXRay;
-import com.amazonaws.xray.entities.Segment;
-import com.amazonaws.xray.entities.Subsegment;
 import com.example.customerfunction.dao.CustomerDAO;
 import com.example.customerfunction.exceptions.CreateCustomerException;
 import com.example.customerfunction.exceptions.FindCustomerException;
