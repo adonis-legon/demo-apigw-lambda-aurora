@@ -1,8 +1,8 @@
-APP_PATH=$1
-APP_NAME=$2
-IMAGE_VERSION=${3:-1.0.0}
-PUSH_IMAGE=${4:-false}
-AWS_ENVIRONMENT=${5}
+APP_PATH=customer-function-spring-boot
+APP_NAME=demo-aws-lambda-customer-function-spring-boot
+IMAGE_VERSION=${1:-1.0.0}
+PUSH_IMAGE=${2:-false}
+AWS_ENVIRONMENT=${3}
 
 CURRENT_PATH=$(pwd)
 
@@ -11,7 +11,7 @@ cd ../lambdas/$APP_PATH
 mvn test
 
 # build app
-mvn compile dependency:copy-dependencies -DincludeScope=runtime
+mvn clean package -DskipTests
 
 # build docker image
 docker build -t $APP_NAME:$IMAGE_VERSION .

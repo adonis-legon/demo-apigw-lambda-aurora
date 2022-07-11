@@ -1,10 +1,15 @@
 package com.example.customerfunction;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
 import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.amazonaws.services.lambda.runtime.tests.annotations.HandlerParams;
@@ -16,17 +21,28 @@ import com.amazonaws.services.lambda.runtime.tests.annotations.Events;
 import com.amazonaws.services.lambda.runtime.tests.annotations.Responses;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 import org.json.JSONException;
 
+@ExtendWith(MockitoExtension.class)
 public class CustomerFunctionIntegrationTest {
     
+    @Mock
     private Context context;
+
+    @Mock
+    private LambdaLogger loggerMock;
 
     private CustomerService customerService;
 
     public CustomerFunctionIntegrationTest() {
         customerService = new CustomerService();
+    }
+
+    @BeforeEach
+    public void setUp() throws Exception {
+        when(context.getLogger()).thenReturn(loggerMock);
     }
 
     @ParameterizedTest

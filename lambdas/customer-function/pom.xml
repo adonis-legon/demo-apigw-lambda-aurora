@@ -6,7 +6,7 @@
 	<artifactId>customer-function</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>customer-function</name>
-	<description>Demo project for Spring Cloud Function to manage Customer entities</description>
+	<description>Demo project for AWS Lambda in Java to manage Customer entities</description>
 	<packaging>jar</packaging>
 	<properties>
         <lambda-java-core>1.2.1</lambda-java-core>
@@ -117,7 +117,7 @@
             <scope>import</scope>
           </dependency>
         </dependencies>
-      </dependencyManagement>
+    </dependencyManagement>
 
 	<build>
 		<plugins>

@@ -28,6 +28,22 @@ services:
       - POWERTOOLS_SERVICE_NAME=demo-aws-lambda-customer-function
     depends_on:
       - customer-db
+  customer-function-spring-boot:
+    image: demo-aws-lambda-customer-function-spring-boot:${CUSTOMER_FUNCTION_SPRING_BOOT_IMAGE_VERSION}
+    container_name: demo-aws-lambda-customer-function-spring-boot
+    ports:
+      - "${LOCAL_CUSTOMER_FUNCTION_SPRING_BOOT_PORT}:8080"
+    environment:
+      - DB_ENDPOINT=demo-aws-lambda-customer-db
+      - DB_PORT=5432
+      - DB_USER=${CUSTOMER_DB_USER}
+      - DB_PASS=${CUSTOMER_DB_PASS}
+      - DB_NAME=${CUSTOMER_DB_NAME}
+      - DB_AUTH_IAM=${CUSTOMER_DB_AUTH_IAM}
+      - DB_REGION=${AWS_REGION}
+      - POWERTOOLS_SERVICE_NAME=demo-aws-lambda-customer-function-spring-boot
+    depends_on:
+      - customer-db
   order-db:
     image: postgres:12
     container_name: demo-aws-lambda-order-db

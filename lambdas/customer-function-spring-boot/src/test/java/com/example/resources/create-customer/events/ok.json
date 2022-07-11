@@ -1,0 +1,48 @@
+{
+    "resource": "/customer",
+    "path": "/customer",
+    "httpMethod": "POST",
+    "body": "{ \"name\": \"Demo User\", \"email\": \"demo@domain.com\"}",
+    "headers": {
+        "Content-Type": "application/json; charset=UTF-8"
+    },
+	"requestContext": {
+		"resourceId": null,
+		"apiId": null,
+		"resourcePath": null,
+		"httpMethod": null,
+		"requestId": "80e8e4d9-f0fd-425b-b89b-3ad4bac07522",
+		"extendedRequestId": "ea69b32b-9700-4f21-993b-63d7ef7ec782",
+		"accountId": null,
+		"identity": {
+			"apiKey": null,
+			"apiKeyId": null,
+			"userArn": null,
+			"cognitoAuthenticationType": null,
+			"caller": null,
+			"userAgent": null,
+			"user": null,
+			"cognitoIdentityPoolId": null,
+			"cognitoIdentityId": null,
+			"cognitoAuthenticationProvider": null,
+			"sourceIp": "127.0.0.1",
+			"accountId": null,
+			"accessKey": null
+		},
+		"authorizer": null,
+		"stage": "test",
+		"path": null,
+		"protocol": "HTTP/1.1",
+		"requestTime": null,
+		"requestTimeEpoch": 1657515881429,
+		"elb": null
+	},
+	"multiValueQueryStringParameters": {},
+	"multiValueHeaders": {
+		"Content-Type": [
+			"application/json"
+		]
+	},
+    "queryStringParameters": null,
+    "pathParameters": null
+  }
