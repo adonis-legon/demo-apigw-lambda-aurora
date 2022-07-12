@@ -1,4 +1,4 @@
-FROM public.ecr.aws/lambda/java:11
+FROM public.ecr.aws/lambda/java:11-arm64
 
 # Copy function code and runtime dependencies from Maven layout
 COPY target/classes ${LAMBDA_TASK_ROOT}

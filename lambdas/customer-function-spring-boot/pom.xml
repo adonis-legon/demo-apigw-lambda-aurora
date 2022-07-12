@@ -21,6 +21,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <powertools>1.5.0</powertools>
+        <aws-sdk-rds>2.17.209</aws-sdk-rds>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -71,6 +72,10 @@
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
+            <artifactId>aws-xray-recorder-sdk-sql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
             <artifactId>aws-xray-recorder-sdk-sql-postgres</artifactId>
         </dependency>
 		<dependency>
@@ -81,6 +86,11 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>rds</artifactId>
+            <version>${aws-sdk-rds}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

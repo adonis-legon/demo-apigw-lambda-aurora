@@ -90,6 +90,26 @@ variable "customer_function_timeout" {
     description = "Timeout of the Customer Lambda Function"
 }
 
+variable "customer_function_spring_boot_name" {
+    type = string
+    description = "Name of the Customer Lambda Function (based on Spring Boot)"
+}
+
+variable "customer_function_spring_boot_version" {
+    type = string
+    description = "Version of the Customer Lambda Function (based on Spring Boot)"
+}
+
+variable "customer_function_spring_boot_dbname" {
+    type = string
+    description = "Database Name of the Customer Lambda Function (based on Spring Boot)"
+}
+
+variable "customer_function_spring_boot_timeout" {
+    type = string
+    description = "Timeout of the Customer Lambda Function (based on Spring Boot)"
+}
+
 variable "order_function_name" {
     type = string
     description = "Name of the Order Lambda Function"
