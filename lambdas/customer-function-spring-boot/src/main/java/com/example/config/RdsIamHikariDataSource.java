@@ -2,7 +2,6 @@ package com.example.config;
 
 import org.springframework.data.util.Pair;
 
-import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
