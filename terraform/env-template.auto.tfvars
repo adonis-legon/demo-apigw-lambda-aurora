@@ -26,4 +26,5 @@ order_function_name = "demo-aws-lambda-order-function"
 order_function_version = "1.0.0"
 order_function_dbname = "order_function_dbname"
 order_function_timeout = 3
+api_key = "api_key"
 tags = "common_tags"

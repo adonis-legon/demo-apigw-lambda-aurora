@@ -66,3 +66,10 @@ scripts$ . terraform-destroy.sh <env>
 ```console
 scripts$ . init-db.sh customer-dev.sh customer.sql
 ```
+
+## Test APIs
+
+```console
+$ curl --request POST 'https://<api-gateway-endpoint>/<stage>/order' --header 'x-api-key: <api-key>' --header 'Content-Type: application/json' \
+--data-raw '{"customer_name": "Demo User", "total_amount": 1234.50}'
+```

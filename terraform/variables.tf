@@ -140,6 +140,11 @@ variable "lambda_security_group" {
     description = "Security Group for the Lambdas to be able to access the RDS Proxy"
 }
 
+variable "api_key" {
+    type = string
+    description = "API Key to be used to access all APIs"
+}
+
 variable "tags" {
   type = map(string)
   description = "Common tags for all resources."
