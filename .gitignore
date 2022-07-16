@@ -11,3 +11,4 @@ docker-env-*.sh
 !env-template.auto.tfvars
 terraform/.terraform
 terraform/terraform.tfstate.d
+terraform/.terraform.lock.hcl
