@@ -6,6 +6,7 @@ resource "random_password" "db_user_password"{
 
 resource "aws_secretsmanager_secret" "demo_apigw_lambda_aurora_db_user_password"{
     name = "${var.environment}-demo-apigw-lambda-db-user-password"
+    recovery_window_in_days = 0
     tags = var.tags
 }
 

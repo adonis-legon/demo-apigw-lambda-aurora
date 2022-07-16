@@ -58,8 +58,21 @@ resource "aws_db_proxy_default_target_group" "demo_apigw_lambda_aurora_db_proxy_
   }
 }
 
+# workaround to avoid Aurora Cluster's primary instance to not be in the Available state, 
+# before Terraform tries to create the RDS Proxy Target, that depends on the instances availability
+resource "time_sleep" "demo_apigw_lambda_aurora_db_proxy_target_group_wait_time" {
+  create_duration  = "10m"
+  depends_on            = [
+    module.aurora_postgresql_serverlessv2.cluster_id
+  ]
+}
+
 resource "aws_db_proxy_target" "demo_apigw_lambda_aurora_db_proxy_target_group" {
-  db_cluster_identifier = module.aurora_postgresql_serverlessv2.cluster_id
-  db_proxy_name          = aws_db_proxy.demo_apigw_lambda_aurora_db_proxy.name
-  target_group_name      = aws_db_proxy_default_target_group.demo_apigw_lambda_aurora_db_proxy_default_target_group.name
+  db_cluster_identifier   = module.aurora_postgresql_serverlessv2.cluster_id
+  db_proxy_name           = aws_db_proxy.demo_apigw_lambda_aurora_db_proxy.name
+  target_group_name       = aws_db_proxy_default_target_group.demo_apigw_lambda_aurora_db_proxy_default_target_group.name
+
+  depends_on              = [
+    time_sleep.demo_apigw_lambda_aurora_db_proxy_target_group_wait_time
+  ]
 }

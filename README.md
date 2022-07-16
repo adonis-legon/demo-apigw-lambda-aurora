@@ -60,7 +60,7 @@ scripts$ . terraform-destroy.sh <env>
 
 ## Manual DB Initialization
 
-1. Create an envarioment variables file for the corresponding Database, using the *db-env-template.sh* file as a template
+1. Create an environment variables file for the corresponding Database, using the *db-env-template.sh* file as a template
 2. Run the *init-db.sh* script passing the environment file and the application schema file as arguments. Example:
 
 ```console

@@ -12,3 +12,4 @@ docker-env-*.sh
 terraform/.terraform/providers
 terraform/.terraform/modules
 terraform/terraform.tfstate.d
+terraform/.terraform.lock.hcl
