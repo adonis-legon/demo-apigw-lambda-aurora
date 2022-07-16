@@ -9,7 +9,5 @@ docker-env-*.sh
 
 *.auto.tfvars
 !env-template.auto.tfvars
-terraform/.terraform/providers
-terraform/.terraform/modules
+terraform/.terraform
 terraform/terraform.tfstate.d
-terraform/.terraform.lock.hcl
