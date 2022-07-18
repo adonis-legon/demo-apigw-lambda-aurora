@@ -140,9 +140,15 @@ variable "lambda_security_group" {
     description = "Security Group for the Lambdas to be able to access the RDS Proxy"
 }
 
-variable "api_key" {
-    type = string
-    description = "API Key to be used to access all APIs"
+variable "api_plan" {
+    default = {
+        api_key = "api_key"
+        limit  = 100
+        period = "DAY"
+        burst_limit = 10
+        rate_limit  = 5
+    }
+    description = "API settings for the demp plan"
 }
 
 variable "tags" {

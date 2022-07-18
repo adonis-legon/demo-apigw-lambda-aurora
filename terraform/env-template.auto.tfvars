@@ -26,5 +26,11 @@ order_function_name = "demo-aws-lambda-order-function"
 order_function_version = "1.0.0"
 order_function_dbname = "order_function_dbname"
 order_function_timeout = 3
-api_key = "api_key"
+api_plan = {
+    api_key = "api_key"
+    limit  = 100
+    period = "DAY"
+    burst_limit = 10
+    rate_limit  = 5
+}
 tags = "common_tags"
