@@ -1,0 +1,68 @@
+{
+    "widgets": [
+        {
+            "height": 7,
+            "width": 8,
+            "y": 0,
+            "x": 16,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ "AWS/RDS", "ServerlessDatabaseCapacity", "DBClusterIdentifier", "dev-demo-apigw-lambda-aurora-db", { "stat": "Average" } ],
+                    [ ".", "FreeableMemory", ".", ".", { "visible": false } ],
+                    [ ".", "ACUUtilization", ".", ".", { "visible": false } ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "us-east-2",
+                "title": "dev-demo-apigw-lambda-aurora-db-one",
+                "period": 60,
+                "stat": "Sum"
+            }
+        },
+        {
+            "height": 7,
+            "width": 8,
+            "y": 0,
+            "x": 0,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ "AWS/Lambda", "ConcurrentExecutions", "FunctionName", "dev-demo-aws-lambda-customer-function-spring-boot" ],
+                    [ "...", "dev-demo-aws-lambda-order-function" ],
+                    [ "...", "dev-demo-aws-lambda-customer-function" ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "us-east-2",
+                "title": "dev-demo-apigw-lambda-aurora-functions",
+                "period": 60,
+                "stat": "Sum"
+            }
+        },
+        {
+            "type": "metric",
+            "x": 8,
+            "y": 0,
+            "width": 8,
+            "height": 7,
+            "properties": {
+                "metrics": [
+                    [ "AWS/RDS", "MaxDatabaseConnectionsAllowed", "Target", "db:dev-demo-apigw-lambda-aurora-db-one", "ProxyName", "dev-demo-apigw-lambda-aurora-db-proxy", "TargetGroup", "default" ],
+                    [ ".", "DatabaseConnections", ".", ".", ".", ".", ".", "." ],
+                    [ ".", "DatabaseConnectionsCurrentlyBorrowed", ".", ".", ".", ".", ".", "." ],
+                    [ ".", "DatabaseConnectionsCurrentlyInTransaction", ".", ".", ".", ".", ".", "." ],
+                    [ ".", "DatabaseConnectionsCurrentlySessionPinned", ".", ".", ".", ".", ".", ".", { "visible": false } ],
+                    [ ".", "DatabaseConnectionsSetupSucceeded", ".", ".", ".", ".", ".", ".", { "visible": false } ],
+                    [ ".", "DatabaseConnectionRequests", ".", ".", ".", ".", ".", "." ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "us-east-2",
+                "title": "dev-demo-apigw-lambda-aurora-db-proxy",
+                "period": 300,
+                "stat": "Average"
+            }
+        }
+    ]
+}
