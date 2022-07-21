@@ -7,6 +7,12 @@ __pycache__
 docker-env-*.sh
 !docker-env-template.sh
 
+load-test-env-*.sh
+*-load-test-template.jmx
+*-load-test-template.jmx.log
+!load-test-env-template.sh
+jmeter.log
+
 *.auto.tfvars
 !env-template.auto.tfvars
 terraform/.terraform
