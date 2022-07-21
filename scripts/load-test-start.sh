@@ -15,4 +15,4 @@ envsubst < $LOAD_TEST_TEMPLATE_FILE > $LOAD_TEST_TEMPLATE_FILE_TEMP
 sh $JMETER_BIN_PATH/jmeter -n -t $LOAD_TEST_TEMPLATE_FILE_TEMP -l $LOAD_TEST_TEMPLATE_FILE_TEMP_OUTPUT > /dev/null 2>&1 &
 
 # watch test log
-tail -fn 10 jmeter.log
+test -f jmeter.log && tail -fn 10 jmeter.log
