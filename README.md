@@ -1,5 +1,16 @@
 # Demo Project for and AWS ApiGateway+Lambda+Aurora stack with security features
 
+This project is a demo of a full stack application composed of:
+
+- Api Gateway
+- Lambda
+- RDS Proxy
+- Aurora Serverless v2
+
+Check this diagram to better understand the architecture:
+
+![image info](./diagram.jpeg)
+
 ## Docker Build Locally
 
 ```console
