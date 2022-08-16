@@ -9,7 +9,7 @@ This project is a demo of a full stack application composed of:
 
 Check this diagram to better understand the architecture:
 
-![image info](./diagram.jpeg)
+![Architecture Diagram](./diagram.jpeg)
 
 ## Docker Build Locally
 
