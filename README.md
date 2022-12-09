@@ -1,4 +1,4 @@
-# Demo Project for and AWS ApiGateway+Lambda+Aurora stack with security features
+# Demo Project for an application stack of AWS ApiGateway+Lambda+Aurora with some security features
 
 This project is a demo of a full stack application composed of:
 
